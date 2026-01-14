@@ -26,6 +26,7 @@ class LinkedList:
             self.tail.next = new_node
             self.tail = new_node
         self.length +=1
+        return True
 
     def pop(self):
         temp = self.head
@@ -57,6 +58,7 @@ class LinkedList:
             self.head = new_node
             
         self.length +=1
+        return True
 
     def popfirst(self):
         temp = self.head
@@ -87,15 +89,52 @@ class LinkedList:
             return None
         node.value = value
         return node
+    
+    def insert(self, index, value):
+        if index < 0 or index > self.length:
+            return False
+        if index == 0:
+            return self.prepend(value)
+        if index == self.length:
+            return self.append(value)
+        new_node = Node(value)
+        temp = self.get(index-1)
+        new_node.next = temp.next
+        temp.next = new_node
+        self.length+=1
+        return True
+    
+    def remove(self, index):
+        if index < 0 or index > self.length -1:
+            return None
+        if index == 0:
+            return self.popfirst()
+        if index == self.length -1:
+            return self.pop()
+        prev = self.get(index - 1)
+        temp = prev.next
+        prev.next = temp.next
+        self.length -= 1
+        return temp.value
+    
+
+    def reverse(self):
+        temp = self.head
+        self.head = self.tail
+        self.tail = temp
+        after = temp.next
+        before = None
+        for _ in range(self.length):
+            after = temp.next
+            temp.next = before
+            before = temp
+            temp = after
+
+        
+
 
 
         
-            
-
-        
-
-        
-
 
 my_linked_list = LinkedList(11)
 my_linked_list.append(3)
@@ -103,12 +142,22 @@ my_linked_list.append(23)
 my_linked_list.append(7)
 
 
+
+
 # #get
 # print(my_linked_list.get(2).value)
 
-#get
-print(my_linked_list.set_value(2, 69).value)
+#set
+#print(my_linked_list.set_value(2, 69).value)
 
+#insert
+# print(my_linked_list.insert(2, 69))
+
+#remove
+# print(my_linked_list.remove(2))
+
+#reverse
+my_linked_list.reverse()
 
 # my_linked_list.prepend(8)
 
